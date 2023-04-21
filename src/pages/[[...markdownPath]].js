@@ -2,15 +2,17 @@
  * Copyright (c) Facebook, Inc. and its affiliates.
  */
 
-import {Fragment, useMemo} from 'react';
-import {useRouter} from 'next/router';
-import {MDXComponents} from 'components/MDX/MDXComponents';
 import {Page} from 'components/Layout/Page';
+import {MDXComponents} from 'components/MDX/MDXComponents';
+import {useRouter} from 'next/router';
+import {Fragment, useMemo} from 'react';
+import rehypeKatex from 'rehype-katex';
+import remarkMath from 'remark-math';
+import sidebarBlog from '../sidebarBlog.json';
+import sidebarCommunity from '../sidebarCommunity.json';
 import sidebarHome from '../sidebarHome.json';
 import sidebarLearn from '../sidebarLearn.json';
 import sidebarReference from '../sidebarReference.json';
-import sidebarCommunity from '../sidebarCommunity.json';
-import sidebarBlog from '../sidebarBlog.json';
 
 export default function Layout({content, toc, meta}) {
   const parsedContent = useMemo(
@@ -164,11 +166,13 @@ export async function getStaticProps(context) {
   const visit = (await import('unist-util-visit')).default;
   const jsxCode = await compileMdx(mdxWithFakeImports, {
     remarkPlugins: [
+      remarkMath,
       ...remarkPlugins,
       (await import('remark-gfm')).default,
       (await import('remark-frontmatter')).default,
     ],
     rehypePlugins: [
+      rehypeKatex,
       // Support stuff like ```js App.js {1-5} active by passing it through.
       function rehypeMetaAsAttributes() {
         return (tree) => {

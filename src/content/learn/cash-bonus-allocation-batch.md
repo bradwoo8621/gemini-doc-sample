@@ -1,11 +1,11 @@
 This section describes the cash bonus allocation processing.
-## 1.1 Description
+## 1.1 Description {/*11-description*/}
 This chapter describes how Gemini processes the cash bonus declaration and allocation Jobs by daily batch. This includes:
 
 - Updating the latest bonus amount at policy benefit level; and   
 - Updating the cash bonus account at policy benefit level; and  
 - Updating the next bonus due date at policy benefit level. 
-## 1.2 Prerequisites
+## 1.2 Prerequisites {/*12-prerequisites*/}
 Policy should satisfy below eligibility criteria:
 
 - Policy is in-force.
@@ -19,12 +19,12 @@ Policy benefits should satisfy below eligibility criteria:
 - The next premium due date of the policy benefit is greater than or equal to the next bonus due date for premium status regular or premium waived.
 - The next bonus due date should be less than or equal to the system date (plus the days in advance);
 - The corresponding cash bonus rate can be found.  
-## 1.3 Cash Bonus Options
+## 1.3 Cash Bonus Options {/*13-cash-bonus-options*/}
 Option 1: To receive SB/CB in cash
 Option 2: To use SB/CB to pay premium
 Option 3: To leave SB/CB on deposit with Company
 Option 4: Option 3 for xx years thereafter Option 2
-## 1.4 Procedures
+## 1.4 Procedures {/*14-procedures*/}
 ***Step 01.*** At a specific time every day, the system starts a batch job of cash bonus allocation.  
 
 ***Step 02.*** The system checks the bonus due date.  
@@ -53,15 +53,15 @@ Option 4: Option 3 for xx years thereafter Option 2
 
 ***Step 07.*** For Option 1, the finance personnel perform payment to the client.
 
-## 1.5 Business Rules
+## 1.5 Business Rules {/*15-business-rules*/}
 - Information update
     - For eligible policy benefits, following information to be updated:
         - Update the latest bonus amount:   
         Latest bonus amount = new bonus amount calculated by below formula:  
-
-[//]: # ($$Latest Bonus Amount=\frac{SA*CB_Factor}{CB_Unit_Amount}$$  )
-
-[//]: # (*NOTE*: The formula is defined in product configuration. CB_Unit_Amount=1. CB_Factor is configured in product definition.  )
+        $$Latest Bonus Amount=\frac{SA*CB_Factor}{CB_Unit_Amount}$$  
+        <Note>
+        The formula is defined in product configuration. CB_Unit_Amount=1. CB_Factor is configured in product definition.
+        </Note>
     - Check the parameter “No. of Completed policy years for CB becoming payable”.
         - If the duration is still not beyond “No. of Completed policy years for CB becoming payable”, no cash bonus will be calculated nor allocated. Batch record generated in CS info. Process ends.
         - If the duration is beyond “No. of Completed policy years for CB becoming payable”, the system will update latest bonus amount and put cash bonus amount of the year into the cash bonus account of which cash bonus allocated status indicator is N. Then, the system updates the related cash bonus allocated status indicator from N to Y   
@@ -71,7 +71,7 @@ Option 4: Option 3 for xx years thereafter Option 2
 - Calculate interests  
 System calculate compound interests for CB bonus account every year on interest calculation date. The cash bonus account interests are calculated by below formula:  
 
-[//]: # ($$Interest={policyAccount.interestPrinciple*rate} – {policyAccount.interestPrinciple}$$  )
+$$Interest={policyAccount.interestPrinciple*rate} – {policyAccount.interestPrinciple}$$  
 
 | Parameter | Formula              | Description                                                                                                                                                        |
 |-----------|:---------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -80,8 +80,8 @@ System calculate compound interests for CB bonus account every year on interest 
 | f         | f=1/-1               | If current interest calculation date > last interest calculation date, f=1.  <br></br>If current interest calculation date < last interest calculation date, f=-1. |
 | d         | -                    | d is the number of days after last interest calculation date.                                                                                                      |
 
-## 1.6 User Cases
-## # Case 1: Policy Whose CB Pay Option is Option 1 
+## 1.6 User Cases {/*16-user-cases*/}
+## # Case 1: Policy Whose CB Pay Option is Option 1  {/*-case-1-policy-whose-cb-pay-option-is-option-1*/}
 - Preconditions:
     - Main Benefit=GEM0168
     - Cash bonus option=1;
@@ -98,7 +98,7 @@ System calculate compound interests for CB bonus account every year on interest 
 | 2025-10-11   | 10,000*0.00535/1=535.00 | 0 (after withdrawal) | 2026-10-17          |
 | 2026-10-11   | 10,000*0.00535/1=535.00 | 0 (after withdrawal) | 2027-10-17          |
 
-## # Case 2: Policy Whose CB Pay Option is Option 2
+## # Case 2: Policy Whose CB Pay Option is Option 2 {/*-case-2-policy-whose-cb-pay-option-is-option-2*/}
 - Preconditions:
     - Main Benefit=GEM0168
     - Cash bonus option=2;
@@ -118,7 +118,7 @@ System calculate compound interests for CB bonus account every year on interest 
 | 2026-12-02   | -                                                                                              | 0 (CB used to repay APL. APL Balance=9082.2-1625.58=7456.62) | 2027-10-17          |
 | 2027-10-11   | 10,000*0.01013/1=1013	0 (CB allocated and used to repay APL. APL Balance=7456.62-1013=6443.62) |                                                              | 2028-10-17          |
 
-## # Case 3: Policy Whose CB Pay Option is Option 3
+## # Case 3: Policy Whose CB Pay Option is Option 3 {/*-case-3-policy-whose-cb-pay-option-is-option-3*/}
 - Preconditions:
     - Main Benefit=GEM0168
     - Cash bonus option=3;
@@ -135,7 +135,7 @@ System calculate compound interests for CB bonus account every year on interest 
 | 2025-10-11   | 10,000*0.00535/1=535 | 310+3.1(interest)+535=848.1          | 2026-10-17          |
 | 2026-10-11   | 10,000*0.00769/1=769 | 313.1+535+8.48(interest)+769=1625.58 | 2027-10-17          |
 
-## # Case 4: Fully-paid Policy
+## # Case 4: Fully-paid Policy {/*-case-4-fully-paid-policy*/}
 - Preconditions:
     - Main Benefit=GEM0168
     - Cash bonus option=1;
@@ -153,7 +153,7 @@ System calculate compound interests for CB bonus account every year on interest 
 | 2025-10-11   | 10,000*0.00535/1=535.00 | 0 (after withdrawal) | 2026-10-17          |
 | 2026-10-11   | 10,000*0.00535/1=535.00 | 0 (after withdrawal) | 2027-10-17          |
 
-## # Case 5: Premium Waived Policy
+## # Case 5: Premium Waived Policy {/*-case-5-premium-waived-policy*/}
 - Preconditions:
     - Main Benefit=GEM0168
     - Cash bonus option=1;
@@ -171,7 +171,7 @@ System calculate compound interests for CB bonus account every year on interest 
 | 2025-10-11   | 10,000*0.00535/1=535.00 | 0 (after withdrawal) | 2026-10-17          |
 | 2026-10-11   | 10,000*0.00535/1=535.00 | 0 (after withdrawal) | 2027-10-17          |
 
-## # Case 6:Reduced Paid-up Policy
+## # Case 6:Reduced Paid-up Policy {/*-case-6reduced-paid-up-policy*/}
 - Preconditions:
     - Main Benefit=GEM0168
     - Cash bonus option=1;
