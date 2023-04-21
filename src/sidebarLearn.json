@@ -1,0 +1,43 @@
+{
+	"title": "Learn Gemini",
+	"path": "/learn",
+	"routes": [
+		{
+			"hasSectionHeader": true,
+			"sectionHeader": "GET STARTED"
+		},
+		{
+			"title": "A Guide",
+			"path": "/learn",
+			"routes": [
+				{
+					"title": "Auto Proposal Withdrawal Batch",
+					"path": "/learn/auto-proposal-withdrawal-batch"
+				}
+			]
+		},
+		{
+			"hasSectionHeader": true,
+			"sectionHeader": "LEARN GEMINI"
+		},
+		{
+			"title": "Other Guides",
+			"tags": [],
+			"path": "/learn/other-guides",
+			"routes": [
+				{
+					"title": "Cash Bonus Allocation Batch",
+					"path": "/learn/cash-bonus-allocation-batch"
+				},
+				{
+					"title": "Renew Extraction Batch",
+					"path": "/learn/renew-extraction-batch"
+				},
+				{
+					"title": "Survival Benefit Allocation Batch",
+					"path": "/learn/survival-benefit-allocation-batch"
+				}
+			]
+		}
+	]
+}
